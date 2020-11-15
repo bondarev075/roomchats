@@ -1,15 +1,13 @@
 class RoomsController < ApplicationController
   before_action :set_room, only: [:show]
+  before_action :users_online, only: %i[index show create]
 
   def index
     @rooms = Room.all
     @room = Room.new
-
-    @online_users = User.where(online: true).map(&:nickname).join(', ')
   end
 
   def show
-    @online_users = User.where(online: true).map(&:nickname).join(', ')
   end
 
   def create
@@ -19,6 +17,10 @@ class RoomsController < ApplicationController
   end
 
   private
+
+  def users_online
+    @online_users = User.online.map(&:nickname).join(', ')
+  end
 
   def set_room
     @room = Room.find_by(token: params[:token])
