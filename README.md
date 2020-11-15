@@ -1,3 +1,3 @@
 ## Roomchats
 
-This application provides to create private chatrooms.
+This application provides chatrooms functionality.

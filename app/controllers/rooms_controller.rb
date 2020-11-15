@@ -4,9 +4,12 @@ class RoomsController < ApplicationController
   def index
     @rooms = Room.all
     @room = Room.new
+
+    @online_users = User.where(online: true).map(&:nickname).join(', ')
   end
 
   def show
+    @online_users = User.where(online: true).map(&:nickname).join(', ')
   end
 
   def create

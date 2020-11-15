@@ -23,7 +23,7 @@ createRoomChannel = (roomId) ->
 
     received: (data) ->
       # Called when there's incoming data on the websocket for this channel
-      console.log('Received message: ' + data['message'])
+      # console.log('Received message in RoomChannel: ' + data['message'])
       $('#messages').append data['message']
 
     speak: (message) ->
