@@ -1,27 +1,15 @@
 class UsersChannel < ApplicationCable::Channel
   def subscribed
-    current_user.update online: true
-    logger.info "STATUS. Set user #{current_user.nickname} status to online"
-
     stream_from("users_channel")
 
-    broadcast_users
+    user_service = UserService.new(current_user, true)
+    user_service.perform
+    # logger.info "[USER_STATUS] User #{current_user.nickname} is online: true"
   end
 
   def unsubscribed
-    current_user.update online: false
-    logger.info "STATUS. Set user #{current_user.nickname} status to offline"
-
-    broadcast_users
-  end
-
-  private
-
-  def users_online
-    User.online.map(&:nickname).join(', ')
-  end
-
-  def broadcast_users
-    ActionCable.server.broadcast "users_channel", users_online: users_online
+    user_service = UserService.new(current_user, false)
+    user_service.perform
+    # logger.info "[USER_STATUS] User #{current_user.nickname} is online: false"
   end
 end

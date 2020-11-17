@@ -4,9 +4,13 @@ jQuery(document).on 'turbolinks:load', ->
       console.log('Connected to UserChannel')
 
     disconnected: ->
-      console.log('Disconnected form UserChannel')
 
     received: (data) ->
-      # Called when there's incoming data on the websocket for this channel
-      console.log('Received message in UserChannel: ' + data['users_online'])
-      $('#users_online').text 'Users online: ' + data['users_online']
+      console.log('Received message in UserChannel: ' + data['user']['nickname'] + ' ' +  data['user']['online'])
+
+      $('#users_online').find('span:contains("' + data['user']['nickname'] + '")').remove()
+      # console.log('Remove span ' + data['user']['nickname'])
+
+      if data['user']['online'] == true
+        $('#users_online').append("<span>" + data['user']['nickname'] + "</span> ")
+        # console.log('Add span ' + data['user']['nickname'])

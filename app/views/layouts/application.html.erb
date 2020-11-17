@@ -15,8 +15,11 @@
       <div class="card text-center mt-4 mb-4">
         <div class="card-body">
           Welcome to Roomchats, <b><%= current_user.nickname %></b>!
-          <div id="users_online">
-            Users online: <%= @online_users %>
+          <div>
+            Users online:
+            <span id="users_online">
+              <%= render partial: 'partials/users', collection: User.online, as: :user %>
+            </span>
           </div>
         </div>
       </div>
