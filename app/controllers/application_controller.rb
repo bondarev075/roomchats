@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
-  helper_method :current_user
+  helper_method :current_user, :users_online
 
   private
 
@@ -14,5 +14,9 @@ class ApplicationController < ActionController::Base
     end
 
     @current_user
+  end
+
+  def users_online
+    User.online
   end
 end
